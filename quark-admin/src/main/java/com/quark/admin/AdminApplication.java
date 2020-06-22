@@ -2,11 +2,13 @@ package com.quark.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.ErrorPageRegistrar;
+import org.springframework.boot.web.server.ErrorPageRegistry;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +21,7 @@ import java.util.Properties;
 @EnableCaching//缓存支持
 public class AdminApplication {
 
+    /*
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
 
@@ -29,6 +32,20 @@ public class AdminApplication {
 
             container.addErrorPages(error401Page, error404Page, error500Page);
         });
+    }
+    */
+
+    @Component
+    public class ErrorConfig implements ErrorPageRegistrar {
+
+        @Override
+        public void registerErrorPages(ErrorPageRegistry registry) {
+            ErrorPage error400Page = new ErrorPage(HttpStatus.BAD_REQUEST, "/error400Page");
+            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error401Page");
+            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error404Page");
+            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error500Page");
+            registry.addErrorPages(error400Page, error401Page, error404Page, error500Page);
+        }
     }
 
     public static void main(String[] args) throws IOException {
