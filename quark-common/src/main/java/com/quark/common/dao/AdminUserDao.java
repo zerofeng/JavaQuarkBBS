@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by lhr on 17-7-31.
@@ -18,7 +19,7 @@ import java.util.List;
 @CacheConfig(cacheNames = "adminusers")
 public interface AdminUserDao extends JpaRepository<AdminUser,Integer>,JpaSpecificationExecutor {
 
-    AdminUser findOne(Integer integer);
+    Optional<AdminUser> findById(Integer integer);
 
     @Cacheable
     List<AdminUser> findAll();

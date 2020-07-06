@@ -72,7 +72,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserDao, AdminUse
 
     @Override
     public void saveAdminRoles(Integer uid, Integer[] roles) {
-        AdminUser adminUser = findOne(uid);
+        AdminUser adminUser = findById(uid);
         if (roles == null) {
             adminUser.setRoles(new HashSet<>());
         } else {

@@ -35,7 +35,7 @@ public class ReplyController extends BaseController {
                              @RequestParam(required = false, defaultValue = "10") int length) {
         int pageNo = start / length;
         if (uid!=null){
-            User user = userService.findOne(uid);
+            User user = userService.findById(uid);
             reply.setUser(user);
         }
 

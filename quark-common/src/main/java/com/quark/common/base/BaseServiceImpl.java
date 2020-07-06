@@ -15,8 +15,8 @@ public class BaseServiceImpl<E extends JpaRepository,T> implements BaseService<T
     protected E repository;
 
     @Override
-    public T findOne(int key) {
-        return (T) repository.findById(key);
+    public T findById(Integer key) {
+        return (T) repository.findById(key).get();
     }
 
     @Override

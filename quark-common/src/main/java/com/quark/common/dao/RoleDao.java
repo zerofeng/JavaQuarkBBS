@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by lhr on 17-7-31.
@@ -16,7 +17,7 @@ import java.util.List;
 @CacheConfig(cacheNames = "roles")
 public interface RoleDao extends JpaRepository<Role,Integer>{
 
-    Role findOne(Integer integer);
+    Optional<Role> findById(Integer integer);
 
     @Cacheable
     List<Role> findAll();

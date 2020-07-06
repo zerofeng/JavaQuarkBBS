@@ -46,7 +46,7 @@ public class AdminApplicationTest {
 
     @Test
     public void testDataSource() {
-       System.out.println(dao.findOne(3));
+       System.out.println(dao.findById(3));
 
     }
 
@@ -68,7 +68,7 @@ public class AdminApplicationTest {
         Posts posts = new Posts();
 //        posts.setId(1);
         posts.setTitle("测试");
-        posts.setUser(userService.findOne(2));
+        posts.setUser(userService.findById(2));
         Page<Posts> page = postsService.findByPage(posts, 0, 10);
         System.out.println(page.getContent());
     }

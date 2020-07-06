@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -36,7 +37,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements R
 
     @Override
     public QuarkResult findRolesAndSelected(Integer id) {
-        Set<Role> userRole = userService.findOne(id).getRoles();
+        Set<Role> userRole = userService.findById(id).getRoles();
         List<Role> roles = findAll();
         for (Role r: roles) {
             if (userRole.contains(r)) r.setSelected(1);
@@ -54,7 +55,8 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements R
 
     @Override
     public void saveRolePermission(Integer roleid, Permission[] pers) {
-        Role role = findOne(roleid);
+        Role role = findById(roleid);
+        //Role role = opt.get();
         if (pers==null){
             role.setPermissions(new HashSet<>());
         }

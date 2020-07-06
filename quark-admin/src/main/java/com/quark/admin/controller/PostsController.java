@@ -34,7 +34,7 @@ public class PostsController extends BaseController {
                              @RequestParam(required = false, defaultValue = "10") int length) {
         int pageNo = start / length;
         if (uid != null) {
-            User user = userService.findOne(uid);
+            User user = userService.findById(uid);
             posts.setUser(user);
         }
         Page<Posts> page = postsService.findByPage(posts, pageNo, length);

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface BaseService<T> {
 
-    T findOne(int key);
+    T findById(Integer key);
     T save(T entity);
     void delete(Object key);
     List<T> findAll();

@@ -8,16 +8,14 @@ import com.quark.common.dao.PermissionDao;
 import com.quark.common.entity.AdminUser;
 import com.quark.common.entity.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +34,8 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
     @Override
     public List<Permission> loadUserPermission(Integer id) {
         List<Permission> perlist = new ArrayList<>();
-        AdminUser user = adminUserDao.findOne(id);
+        Optional<AdminUser> opt = adminUserDao.findById(id);
+        AdminUser user = opt.get();
         if (user.getRoles().size() > 0) {
             user.getRoles().stream()
                     .filter(role -> role.getPermissions().size() > 0)
@@ -50,7 +49,8 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
     @Override
     public List<Permission> loadUserPermissionByType(Integer id, Integer type) {
         List<Permission> perlist = new ArrayList<>();
-        AdminUser user = adminUserDao.findOne(id);
+        Optional<AdminUser> opt = adminUserDao.findById(id);
+        AdminUser user = opt.get();
         if (user.getRoles().size() > 0) {
             user.getRoles().stream()
                     .filter(role -> role.getPermissions().size() > 0)
@@ -66,7 +66,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
 
     @Override
     public List<Permission> findPermissionsAndSelected(Integer id) {
-        Set<Permission> permissions = roleService.findOne(id).getPermissions();
+        Set<Permission> permissions = roleService.findById(id).getPermissions();
         List<Permission> all = repository.findAll();
         for (Permission p: all) {
             if (permissions.contains(p)) p.setChecked("true");
