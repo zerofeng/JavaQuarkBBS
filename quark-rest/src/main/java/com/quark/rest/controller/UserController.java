@@ -170,7 +170,7 @@ public class UserController extends BaseController {
     @GetMapping("/detail/{userid}")
     public QuarkResult getUserById(@PathVariable("userid") Integer userid){
         QuarkResult result = restProcessor(() -> {
-            User user = userService.findOne(userid);
+            User user = userService.findById(userid);
             if (user == null || userid == null) return QuarkResult.warn("用户不存在");
             List<Posts> postss = postsService.getPostsByUser(user);
             HashMap<String, Object> map = new HashMap<>();

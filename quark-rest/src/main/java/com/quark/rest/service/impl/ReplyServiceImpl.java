@@ -62,7 +62,7 @@ public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao, Reply> implement
     @Override
     public void saveReply(Reply reply, Integer postsId, User user) {
         try {
-            Posts posts = postsDao.findOne(postsId);
+            Posts posts = postsDao.findById(postsId).get();
 
             if (posts == null) throw new ServiceProcessException("帖子不存在!");
 

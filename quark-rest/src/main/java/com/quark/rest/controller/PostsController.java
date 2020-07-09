@@ -57,7 +57,7 @@ public class PostsController extends BaseController {
             User userbytoken = userService.getUserByToken(token);
             if (userbytoken == null) return QuarkResult.warn("用户不存在,请先登录！");
 
-            User user = userService.findOne(userbytoken.getId());
+            User user = userService.findById(userbytoken.getId());
             if (user.getEnable() != 1) return QuarkResult.warn("用户处于封禁状态！");
 
             postsService.savePosts(posts, labelId, user);
@@ -106,7 +106,7 @@ public class PostsController extends BaseController {
             @RequestParam(required = false, defaultValue = "20") int length) {
         QuarkResult result = restProcessor(() -> {
             HashMap<String, Object> map = new HashMap<>();
-            Posts posts = postsService.findOne(postsid);
+            Posts posts = postsService.findById(postsid);
             if (posts == null) return QuarkResult.error("帖子不存在");
             map.put("posts", posts);
 
@@ -132,7 +132,7 @@ public class PostsController extends BaseController {
             @RequestParam(required = false, defaultValue = "20") int length) {
 
         QuarkResult result = restProcessor(() -> {
-            Label label = labelService.findOne(labelid);
+            Label label = labelService.findById(labelid);
             if (label == null) return QuarkResult.error("标签不存在");
             Page<Posts> page = postsService.getPostsByLabel(label, pageNo - 1, length);
             return QuarkResult.ok(page.getContent(), page.getTotalElements(), page.getNumberOfElements());

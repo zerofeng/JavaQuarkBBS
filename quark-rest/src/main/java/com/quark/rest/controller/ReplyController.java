@@ -46,7 +46,7 @@ public class ReplyController extends BaseController{
             User userbytoken = userService.getUserByToken(token);
             if (userbytoken == null) return QuarkResult.warn("用户不存在,请先登录！");
 
-            User user = userService.findOne(userbytoken.getId());
+            User user = userService.findById(userbytoken.getId());
             if (user.getEnable() != 1) return QuarkResult.warn("用户处于封禁状态！");
 
             replyService.saveReply(reply, postsId, user);

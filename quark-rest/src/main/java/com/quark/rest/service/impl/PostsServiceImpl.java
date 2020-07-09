@@ -40,7 +40,7 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
     @Override
     public void savePosts(Posts posts, Integer labelId, User user) {
         try {
-            Label label = labelDao.findOne(labelId);
+            Label label = labelDao.findById(labelId).get();
 
             if (label == null) throw new ServiceProcessException("标签不存在!");
             //标签的帖子数量+1

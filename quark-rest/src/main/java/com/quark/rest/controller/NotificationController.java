@@ -37,7 +37,7 @@ public class NotificationController extends BaseController {
     @GetMapping("/{uid}")
     public QuarkResult getAllNotification(@PathVariable("uid") Integer uid) {
         QuarkResult result = restProcessor(() -> {
-            User user = userService.findOne(uid);
+            User user = userService.findById(uid);
             if (user==null) return QuarkResult.warn("用户不存在！");
             List<Notification> list = notificationService.findByUser(user);
             return QuarkResult.ok(list);
@@ -52,7 +52,7 @@ public class NotificationController extends BaseController {
     @DeleteMapping("/{uid}")
     public QuarkResult deleteAllNotification(@PathVariable("uid") Integer uid){
         QuarkResult result = restProcessor(() -> {
-            User user = userService.findOne(uid);
+            User user = userService.findById(uid);
             if (user == null) return QuarkResult.warn("用户不存在！");
             notificationService.deleteByUser(user);
             return QuarkResult.ok();
